@@ -1,10 +1,26 @@
-
-# And so it begins
-
-I don't have much to share for write now but check this out : )
-
-<canvas id=canvas></canvas>
-<style type="text/css">
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Will Johnson</title>
+  <link href="http://wcj.io/atom.xml" rel="self"/>
+  <link href="http://wcj.io"/>
+  <updated>2015-08-30T00:41:08.189Z</updated>
+  <id>http://wcj.io</id>
+  <author>
+    <name>Will Johnson</name>
+  </author>
+  <entry>
+    <title>And so it begins</title>
+    <link href="http://wcj.io/welcome"/>
+    <id>http://wcj.io/welcome</id>
+    <updated>2015-05-15T00:00:00.000Z</updated>
+    <author>
+      <name>Will Johnson</name>
+    </author>
+    <summary type="html">&lt;p&gt;I don’t have much to share for write now but check this out : )&lt;/p&gt;
+</summary>
+    <content type="html">&lt;p&gt;I don’t have much to share for write now but check this out : )&lt;/p&gt;
+&lt;p&gt;&lt;canvas id=canvas&gt;&lt;/canvas&gt;&lt;/p&gt;
+&lt;style type=&quot;text/css&quot;&gt;
 * {
    margin:0; padding:0;
 }
@@ -12,9 +28,9 @@ I don't have much to share for write now but check this out : )
 html {
    overflow:hidden;
 }
-</style>
+&lt;/style&gt;
 
-<script type="text/javascript">
+&lt;script type=&quot;text/javascript&quot;&gt;
 window.onload = function() {
 
    window.requestAnimFrame = (function() {
@@ -26,8 +42,8 @@ window.onload = function() {
          };
    })();
 
-   var canvas = document.getElementById("canvas");
-   var ctx = canvas.getContext("2d");
+   var canvas = document.getElementById(&quot;canvas&quot;);
+   var ctx = canvas.getContext(&quot;2d&quot;);
 
    var arr = [];
    var S = function(x, y, angle) {
@@ -47,14 +63,14 @@ window.onload = function() {
    }
 
    function bg() {
-      ctx.fillStyle = "rgba(255,255,255,1)";
+      ctx.fillStyle = &quot;rgba(255,255,255,1)&quot;;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
    }
 
    function init() {
       var x, y, angle;
 
-      for (var i = 1; i <= num; i++) {
+      for (var i = 1; i &lt;= num; i++) {
          x = canvas.width / 2;
          y = canvas.height / 2;
          angle = (i / num) * 2 * Math.PI;
@@ -75,12 +91,12 @@ window.onload = function() {
 
    function draw() {
       var s;
-      for (var i = 0; i < arr.length; i++) {
+      for (var i = 0; i &lt; arr.length; i++) {
          s = arr[i];
 
-         ctx.strokeStyle = "rgb(100,150,200)";
+         ctx.strokeStyle = &quot;rgb(100,150,200)&quot;;
          ctx.beginPath();
-         for (var j = 0; j < lines; j++) {
+         for (var j = 0; j &lt; lines; j++) {
             ctx.moveTo(s.x, s.y);
             ctx.lineTo(
                s.x + r * Math.cos((j / lines) * 2 * Math.PI+3*x),
@@ -108,4 +124,6 @@ window.onload = function() {
    init();
    loop();
 }
-</script>
+&lt;/script&gt;</content>
+  </entry>
+</feed>
