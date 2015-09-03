@@ -42,7 +42,7 @@ window.onload = function() {
    var lines = 32;
    /*--------------------------------------*/
    function size() {
-      canvas.width = window.innerWidth;
+      canvas.width = window.innerWidth / 2;
       canvas.height = window.innerHeight;
    }
 
