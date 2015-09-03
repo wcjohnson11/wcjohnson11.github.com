@@ -7,6 +7,7 @@ Today we'll be looking at ways to instantiate a class structure and if you keep 
 To keep some semblance of consistency, and to keep myself (and maybe you) entertained across these four approaches, we'll be building up a Batman class. It may not be the class this post deserves, but it's the class this post needs.
 
 <p><img src="./lego-batman.jpg" alt=""></p>
+
 ### First up is the Functional Instantiation Pattern
 
 ```javascript
@@ -78,15 +79,17 @@ var newBatman = makeBatman();
 ```
 
 There are some obvious similarities between these last two methods. The difference is where the methods are. In the prototypal pattern, Object.create creates a delegation relationship between the object being created and the object being passed in. 
+
 This means that if an instantiated Batman is called upon to fightJoker, we'll first look for a fightJoker method on the individual Batman but when we don't find one there, we'll be go to the batmanMethods object where the fightJoker method lives. The fightJoker method will be delegated to the batmanMethods object.
 
 
 Even though this Batman may not have these actions hard-coded in, he has access to them through the batmanMethods he was created with. Think of this as some heriditary instinct that he has. While he may not explicitly have a method for fighting the Joker, when he looks for it, he will find it in the batmanMethods object that he was created with.
 
 This saves space but can also make code a bit more flexible since if a Batman were to have a special fightJoker or workOut method it would take precedence over one that is on the batmanMethods object. Hooray for flexibility!
-<p><img src="./batman-yoga.jpg" alt=""></p>
+
 
 ### Pseudo-Classical Instantiation
+
 ```javascript
 var Batman = function () {  
   this.age = 38;
@@ -107,7 +110,13 @@ var newBatman = new Batman();
 
 It is the method that most browsers are optimized for so get comfortable with it.
 Most imporant to understand with this method is what's going on up at the top. There's few things happening implicitly in this pattern.
-1. `this = object.create(batman)` happens right at the beginning 
-2. return this, which is the new batman 
+1. `this = object.create(batman)` happens implicitly right at the beginning (_You didn't event have to code it!_)
+2. The Batman function return `this`, which is the new batman (_You didn't have to code that either!_)
 3. The other thing to pay attention to is that these methods are being added onto the Batman Object prototype. These methods will then be available on every new Batman instance to delegate to if a lookup on the original object fails
+
+Also, you may have noticed that the Batman function starts with a capital B, where the other methods started with a lower-case letter. This is actual best-practices and will let other people reading your code know that you're using Pseudo-Classical instantiation. Additionally, we used the new keyword, which is what tells the parser to implicitly do those magic steps above!
+
+So we've covered all of the above instantiation types and I'd be surprised if you don't run into them in the future. I typically use Pseudo-Classical and as mentioned earlier, it's what most browsers are optimized for.
+
+Now you're off to the races, any questions? lemme know!
 <p><img src="./batman-run.gif" alt=""></p>
