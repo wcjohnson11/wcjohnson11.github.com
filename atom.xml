@@ -3,7 +3,7 @@
   <title>Will Johnson</title>
   <link href="http://wcj.io/atom.xml" rel="self"/>
   <link href="http://wcj.io"/>
-  <updated>2015-08-30T00:58:11.370Z</updated>
+  <updated>2015-09-03T04:49:40.658Z</updated>
   <id>http://wcj.io</id>
   <author>
     <name>Will Johnson</name>
@@ -58,7 +58,7 @@ window.onload = function() {
    var lines = 32;
    /*--------------------------------------*/
    function size() {
-      canvas.width = window.innerWidth;
+      canvas.width = window.innerWidth / 2;
       canvas.height = window.innerHeight;
    }
 
