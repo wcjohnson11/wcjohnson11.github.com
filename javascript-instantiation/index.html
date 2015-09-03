@@ -1,0 +1,163 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Javascript&#x27;s 4 Instantiation Methods</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="twitter:creator" content="wcj111">
+    <meta name="twitter:card" content="">
+    <link rel="alternate" type="application/atom+xml" href="atom.xml">
+    <link rel="stylesheet" href="/index.css">
+    <script type="text/javascript">
+      !function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","group","track","ready","alias","page","once","off","on"];analytics.factory=function(t){return function(){var e=Array.prototype.slice.call(arguments);e.unshift(t);analytics.push(e);return analytics}};for(var t=0;t<analytics.methods.length;t++){var e=analytics.methods[t];analytics[e]=analytics.factory(e)}analytics.load=function(t){var e=document.createElement("script");e.type="text/javascript";e.async=!0;e.src=("https:"===document.location.protocol?"https://":"http://")+"cdn.segment.com/analytics.js/v1/"+t+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(e,n)};analytics.SNIPPET_VERSION="3.0.1";
+      analytics.load('TL3ANRWfdNX6kcqdVYKp8SVaeEJgEym8');
+      }}();
+    </script>
+  </head>
+  <body>
+    <div class="Layout">
+      <div class="Layout-nav">
+        <div class="Profile">
+          <a class="Profile-avatar" href="/"></a>
+          <h1 class="Profile-name Heading Heading--medium"><a href="/">Will Johnson</a></h4>
+          <p class="Profile-role">Success at <a class="Link" href="https://segment.com">Segment</a></p>
+        
+          <ul class="Profile-links">
+            <a class="Profile-link Profile-twitter-link" href="https://twitter.com/wcj111">Twitter</a>
+            <a class="Profile-link Profile-github-link" href="https://github.com/wcjohnson11">GitHub</a>
+            
+            
+            
+            
+            
+            
+            <a class="Profile-link Profile-rss-link" href="/atom.xml">RSS<a>
+          </ul>
+        
+          <a class="Profile-twitter-button twitter-follow-button" href="https://twitter.com/wcj111" data-show-count="false">Follow @wcj111</a>
+          <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+        </div>      </div>
+      <div class="Layout-main"><div id="Reading-progress">
+  <span id="Progress-bar" class="bar"></span>
+</div>
+<article class="Article">
+  <a class="Article-home" href="/">Home</a>
+  <h1 class="Article-title Heading Heading--huge">Javascript&#x27;s 4 Instantiation Methods</h1>
+  <time class="Article-date" datetime="2015-09-02T00:00:00.000Z">Tuesday, 1 September 2015</time>
+  <div class="Article-content Prose Prose--medium">
+    <p>There are so many ways to do anything in Javascript and while it’s easy to find something that works and stick with it, I’d argue it’s worthwhile to understand a little better how this magic works.
+Today we’ll be looking at ways to create a class structure, something you’ll likely find yourself doing quite a bit as you get more into programming.
+I’m here to tell you that even though you shouldn’t need that many, you will certainly run into them in the wild and it’s helpful to be able to differentiate between them. That way, you can speak to the different methods of creating class structures and understand why one may be better than the others.
+To keep some semblance of consistency across these four approaches, we’ll be building up a Batman class. It may not be the class this post deserves, but it’s the class this post needs.</p>
+<p><p><img src="./lego-batman.jpg" alt=""></p></p>
+<h3 id="first-up-is-the-functional-instantiation-pattern">First up is the Functional Instantiation Pattern</h3>
+<pre><code class="lang-javascript">var makeBatman = function() {  
+  var batman = {};
+  batman.age = 38;
+  batman.strength = 200;
+  batman.fightJoker = function () {
+    this.age--;
+  };
+  batman.workOut = function () {
+    this.strength++;
+  };
+  return Batman;
+};
+
+var newBatman = makeBatman();
+</code></pre>
+<p>The functional instantiation pattern requires that all methods are defined within one master maker function. This means that each instance of Batman will have all of these methods directly on the object. 
+While this seems like it makes sense at first, it violates the DRY(Don’t Repeat Yourself) commandment that all good coders follow.
+Think about it this way, wouldn’t it be more efficient if you were raising an army of batmen that he (or she) should instinctively know how to work out or fight Joker? The next couple of methods are sort of like that.</p>
+<h3 id="functional-instantiation-w-shared-methods">Functional Instantiation w/ Shared Methods</h3>
+<pre><code class="lang-javascript">var makeBatman = function() {  
+  var batman = {};
+  batman.age = 38;
+  batman.strength = 200;
+  _.extend(batman, sharedMethods);
+  return Batman;
+};
+var sharedMethods = {};
+
+sharedMethods.fightJoker = function () {  
+  this.age--;
+};
+sharedMethods.workOut = function () {  
+  this.strength++;
+};
+
+var newBatman = makeBatman();
+</code></pre>
+<p>This example uses extend from the underscore js library. This method attaches a reference to the sharedMethods object, and its methods to the Batman class.
+Each Batman can have their own age and strength but they will share the same methods, making your code leaner and faster. Imagine how much more efficient it will be to raise your vigilante batman army!</p>
+<h3 id="prototypal-instantiation">Prototypal Instantiation</h3>
+<pre><code class="lang-javascript">var makeBatman = function() {  
+  var batman = Object.create(batmanMethods);
+  batman.age = 38;
+  batman.strength = 200;
+  return batman;
+};
+var batmanMethods = {};
+
+batmanMethods.fightJoker = function () {  
+  this.age--;
+};
+batmanMethods.workOut = function () {  
+  this.strength++;
+};
+
+var newBatman = makeBatman();
+</code></pre>
+<p>There are some obvious similarities between these last two methods. The difference is where the methods are. In the prototypal pattern, Object.create creates a delegation relationship between the object being created and the object being passed in. 
+This means that if an instantiated Batman is called upon to fightJoker, the lookup will fail on the given Batman instance but will be delegated to the batmanMethods object.
+Even though this Batman may not have these actions hard-coded in, he has access to them through the batmanMethods he was created with. Think of this as some heriditary instinct that he has. While he may not explicitly have a method for fighting the Joker, when he looks for it, he will find it in the batmanMethods object that he was created with.
+This saves space but can also make code a bit more flexible since if a Batman were to have a special fightJoker or workOut method it would take precedence over one that is on the batmanMethods object</p>
+<h3 id="pseudo-classical-instantiation">Pseudo-Classical Instantiation</h3>
+<pre><code class="lang-javascript">var Batman = function () {  
+  this.age = 38;
+  this.strength = 200;
+};
+
+Batman.prototype.fightJoker = function () {  
+  this.age--;
+};
+Batman.prototype.workOut = function () {  
+  this.strength++;
+};
+
+var newBatman = new Batman();
+</code></pre>
+<h3 id="behold-pseudoclassical-instantiation-">Behold! PseudoClassical Instantiation!</h3>
+<p>It is the method that most browsers are optimized for so get comfortable with it.
+Most imporant to understand with this method is what’s going on up at the top. There’s few things happening implicitly in this pattern.</p>
+<ol>
+<li><code>this = object.create(batman)</code> happens right at the beginning </li>
+<li>return this, which is the new batman </li>
+<li>The other thing to pay attention to is that these methods are being added onto the Batman Object prototype. These methods will then be available on every new Batman instance to delegate to if a lookup on the original object fails</li>
+</ol>
+
+  </div>
+</article>
+<script>
+  analytics.page('Article', {
+    article: {
+      name: "Javascript&#x27;s 4 Instantiation Methods",
+      date: "2015-09-02T00:00:00.000Z"
+    }
+  });
+  window.addEventListener('scroll', function(e) {
+    var s = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
+    var body = document.body;
+    var html = document.documentElement;
+    var d = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
+    var c = window.innerHeight;
+    var position = (s / (d - c)) * 100;
+    document.getElementById('Progress-bar').setAttribute('style', 'width: ' + position + '%');
+  });
+</script>
+      </div>
+    </div>
+    <script src="/index.js"></script>
+  </body>
+</html>

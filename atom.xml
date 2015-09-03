@@ -3,11 +3,113 @@
   <title>Will Johnson</title>
   <link href="http://blog.wcj.io/atom.xml" rel="self"/>
   <link href="http://blog.wcj.io"/>
-  <updated>2015-09-03T04:50:22.075Z</updated>
+  <updated>2015-09-03T05:24:52.762Z</updated>
   <id>http://blog.wcj.io</id>
   <author>
     <name>Will Johnson</name>
   </author>
+  <entry>
+    <title>Javascript&#x27;s 4 Instantiation Methods</title>
+    <link href="http://blog.wcj.io/javascript-instantiation"/>
+    <id>http://blog.wcj.io/javascript-instantiation</id>
+    <updated>2015-09-02T00:00:00.000Z</updated>
+    <author>
+      <name>Will Johnson</name>
+    </author>
+    <summary type="html">&lt;p&gt;There are so many ways to do anything in Javascript and while it’s easy to find something that works and stick with it, I’d argue it’s worthwhile to understand a little better how this magic works.&lt;/p&gt;
+</summary>
+    <content type="html">&lt;p&gt;There are so many ways to do anything in Javascript and while it’s easy to find something that works and stick with it, I’d argue it’s worthwhile to understand a little better how this magic works.
+Today we’ll be looking at ways to create a class structure, something you’ll likely find yourself doing quite a bit as you get more into programming.
+I’m here to tell you that even though you shouldn’t need that many, you will certainly run into them in the wild and it’s helpful to be able to differentiate between them. That way, you can speak to the different methods of creating class structures and understand why one may be better than the others.
+To keep some semblance of consistency across these four approaches, we’ll be building up a Batman class. It may not be the class this post deserves, but it’s the class this post needs.&lt;/p&gt;
+&lt;p&gt;&lt;p&gt;&lt;img src=&quot;./lego-batman.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;&lt;/p&gt;
+&lt;h3 id=&quot;first-up-is-the-functional-instantiation-pattern&quot;&gt;First up is the Functional Instantiation Pattern&lt;/h3&gt;
+&lt;pre&gt;&lt;code class=&quot;lang-javascript&quot;&gt;var makeBatman = function() {  
+  var batman = {};
+  batman.age = 38;
+  batman.strength = 200;
+  batman.fightJoker = function () {
+    this.age--;
+  };
+  batman.workOut = function () {
+    this.strength++;
+  };
+  return Batman;
+};
+
+var newBatman = makeBatman();
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The functional instantiation pattern requires that all methods are defined within one master maker function. This means that each instance of Batman will have all of these methods directly on the object. 
+While this seems like it makes sense at first, it violates the DRY(Don’t Repeat Yourself) commandment that all good coders follow.
+Think about it this way, wouldn’t it be more efficient if you were raising an army of batmen that he (or she) should instinctively know how to work out or fight Joker? The next couple of methods are sort of like that.&lt;/p&gt;
+&lt;h3 id=&quot;functional-instantiation-w-shared-methods&quot;&gt;Functional Instantiation w/ Shared Methods&lt;/h3&gt;
+&lt;pre&gt;&lt;code class=&quot;lang-javascript&quot;&gt;var makeBatman = function() {  
+  var batman = {};
+  batman.age = 38;
+  batman.strength = 200;
+  _.extend(batman, sharedMethods);
+  return Batman;
+};
+var sharedMethods = {};
+
+sharedMethods.fightJoker = function () {  
+  this.age--;
+};
+sharedMethods.workOut = function () {  
+  this.strength++;
+};
+
+var newBatman = makeBatman();
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This example uses extend from the underscore js library. This method attaches a reference to the sharedMethods object, and its methods to the Batman class.
+Each Batman can have their own age and strength but they will share the same methods, making your code leaner and faster. Imagine how much more efficient it will be to raise your vigilante batman army!&lt;/p&gt;
+&lt;h3 id=&quot;prototypal-instantiation&quot;&gt;Prototypal Instantiation&lt;/h3&gt;
+&lt;pre&gt;&lt;code class=&quot;lang-javascript&quot;&gt;var makeBatman = function() {  
+  var batman = Object.create(batmanMethods);
+  batman.age = 38;
+  batman.strength = 200;
+  return batman;
+};
+var batmanMethods = {};
+
+batmanMethods.fightJoker = function () {  
+  this.age--;
+};
+batmanMethods.workOut = function () {  
+  this.strength++;
+};
+
+var newBatman = makeBatman();
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;There are some obvious similarities between these last two methods. The difference is where the methods are. In the prototypal pattern, Object.create creates a delegation relationship between the object being created and the object being passed in. 
+This means that if an instantiated Batman is called upon to fightJoker, the lookup will fail on the given Batman instance but will be delegated to the batmanMethods object.
+Even though this Batman may not have these actions hard-coded in, he has access to them through the batmanMethods he was created with. Think of this as some heriditary instinct that he has. While he may not explicitly have a method for fighting the Joker, when he looks for it, he will find it in the batmanMethods object that he was created with.
+This saves space but can also make code a bit more flexible since if a Batman were to have a special fightJoker or workOut method it would take precedence over one that is on the batmanMethods object&lt;/p&gt;
+&lt;h3 id=&quot;pseudo-classical-instantiation&quot;&gt;Pseudo-Classical Instantiation&lt;/h3&gt;
+&lt;pre&gt;&lt;code class=&quot;lang-javascript&quot;&gt;var Batman = function () {  
+  this.age = 38;
+  this.strength = 200;
+};
+
+Batman.prototype.fightJoker = function () {  
+  this.age--;
+};
+Batman.prototype.workOut = function () {  
+  this.strength++;
+};
+
+var newBatman = new Batman();
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&quot;behold-pseudoclassical-instantiation-&quot;&gt;Behold! PseudoClassical Instantiation!&lt;/h3&gt;
+&lt;p&gt;It is the method that most browsers are optimized for so get comfortable with it.
+Most imporant to understand with this method is what’s going on up at the top. There’s few things happening implicitly in this pattern.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;this = object.create(batman)&lt;/code&gt; happens right at the beginning &lt;/li&gt;
+&lt;li&gt;return this, which is the new batman &lt;/li&gt;
+&lt;li&gt;The other thing to pay attention to is that these methods are being added onto the Batman Object prototype. These methods will then be available on every new Batman instance to delegate to if a lookup on the original object fails&lt;/li&gt;
+&lt;/ol&gt;
+</content>
+  </entry>
   <entry>
     <title>And so it begins</title>
     <link href="http://blog.wcj.io/welcome"/>

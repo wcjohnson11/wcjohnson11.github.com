@@ -6,14 +6,20 @@
 
   <url>
     <loc>http://blog.wcj.io</loc>
-    <lastmod>2015-09-03T04:50:22.075Z</lastmod>
+    <lastmod>2015-09-03T05:24:52.762Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
     <url>
+      <loc>http://blog.wcj.io/javascript-instantiation</loc>
+      <lastmod>2015-09-03T05:24:52.762Z</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.8</priority>
+    </url>
+    <url>
       <loc>http://blog.wcj.io/welcome</loc>
-      <lastmod>2015-09-03T04:50:22.075Z</lastmod>
+      <lastmod>2015-09-03T05:24:52.762Z</lastmod>
       <changefreq>weekly</changefreq>
       <priority>0.8</priority>
     </url>
