@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>Will Johnson</title>
-  <link href="http://wcj.io/atom.xml" rel="self"/>
-  <link href="http://wcj.io"/>
-  <updated>2015-09-03T04:49:40.658Z</updated>
-  <id>http://wcj.io</id>
+  <link href="http://blog.wcj.io/atom.xml" rel="self"/>
+  <link href="http://blog.wcj.io"/>
+  <updated>2015-09-03T04:50:22.075Z</updated>
+  <id>http://blog.wcj.io</id>
   <author>
     <name>Will Johnson</name>
   </author>
   <entry>
     <title>And so it begins</title>
-    <link href="http://wcj.io/welcome"/>
-    <id>http://wcj.io/welcome</id>
+    <link href="http://blog.wcj.io/welcome"/>
+    <id>http://blog.wcj.io/welcome</id>
     <updated>2015-05-15T00:00:00.000Z</updated>
     <author>
       <name>Will Johnson</name>
