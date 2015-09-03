@@ -3,7 +3,7 @@
   <title>Will Johnson</title>
   <link href="http://blog.wcj.io/atom.xml" rel="self"/>
   <link href="http://blog.wcj.io"/>
-  <updated>2015-09-03T05:24:52.762Z</updated>
+  <updated>2015-09-03T06:21:52.648Z</updated>
   <id>http://blog.wcj.io</id>
   <author>
     <name>Will Johnson</name>
@@ -18,11 +18,11 @@
     </author>
     <summary type="html">&lt;p&gt;There are so many ways to do anything in Javascript and while it’s easy to find something that works and stick with it, I’d argue it’s worthwhile to understand a little better how this magic works.&lt;/p&gt;
 </summary>
-    <content type="html">&lt;p&gt;There are so many ways to do anything in Javascript and while it’s easy to find something that works and stick with it, I’d argue it’s worthwhile to understand a little better how this magic works.
-Today we’ll be looking at ways to create a class structure, something you’ll likely find yourself doing quite a bit as you get more into programming.
-I’m here to tell you that even though you shouldn’t need that many, you will certainly run into them in the wild and it’s helpful to be able to differentiate between them. That way, you can speak to the different methods of creating class structures and understand why one may be better than the others.
-To keep some semblance of consistency across these four approaches, we’ll be building up a Batman class. It may not be the class this post deserves, but it’s the class this post needs.&lt;/p&gt;
-&lt;p&gt;&lt;p&gt;&lt;img src=&quot;./lego-batman.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;&lt;/p&gt;
+    <content type="html">&lt;p&gt;There are so many ways to do anything in Javascript and while it’s easy to find something that works and stick with it, I’d argue it’s worthwhile to understand a little better how this magic works.&lt;/p&gt;
+&lt;p&gt;Today we’ll be looking at ways to instantiate a class structure and if you keep reading, you’ll soon be able to differentiate between them. That way, you can speak to the different methods of creating class structures and understand why one may be better than the others.&lt;/p&gt;
+&lt;p&gt;To keep some semblance of consistency, and to keep myself (and maybe you) entertained across these four approaches, we’ll be building up a Batman class. It may not be the class this post deserves, but it’s the class this post needs.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;./lego-batman.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+
 &lt;h3 id=&quot;first-up-is-the-functional-instantiation-pattern&quot;&gt;First up is the Functional Instantiation Pattern&lt;/h3&gt;
 &lt;pre&gt;&lt;code class=&quot;lang-javascript&quot;&gt;var makeBatman = function() {  
   var batman = {};
@@ -34,24 +34,23 @@ To keep some semblance of consistency across these four approaches, we’ll be b
   batman.workOut = function () {
     this.strength++;
   };
-  return Batman;
+  return batman;
 };
 
 var newBatman = makeBatman();
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;The functional instantiation pattern requires that all methods are defined within one master maker function. This means that each instance of Batman will have all of these methods directly on the object. 
-While this seems like it makes sense at first, it violates the DRY(Don’t Repeat Yourself) commandment that all good coders follow.
-Think about it this way, wouldn’t it be more efficient if you were raising an army of batmen that he (or she) should instinctively know how to work out or fight Joker? The next couple of methods are sort of like that.&lt;/p&gt;
+While this seems like it makes sense at first, it violates the DRY(Don’t Repeat Yourself) commandment that all good coders follow.&lt;/p&gt;
+&lt;p&gt;Think about it this way, wouldn’t it be more efficient if you were raising an army of batmen and instead of having to train each one individually, he (or she) could instinctively know how to work out or fight Joker by sharing some Bat-hivemind? Totally. The next couple of methods are sort of like that.&lt;/p&gt;
 &lt;h3 id=&quot;functional-instantiation-w-shared-methods&quot;&gt;Functional Instantiation w/ Shared Methods&lt;/h3&gt;
 &lt;pre&gt;&lt;code class=&quot;lang-javascript&quot;&gt;var makeBatman = function() {  
   var batman = {};
   batman.age = 38;
   batman.strength = 200;
   _.extend(batman, sharedMethods);
-  return Batman;
+  return batman;
 };
 var sharedMethods = {};
-
 sharedMethods.fightJoker = function () {  
   this.age--;
 };
@@ -61,8 +60,8 @@ sharedMethods.workOut = function () {
 
 var newBatman = makeBatman();
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;This example uses extend from the underscore js library. This method attaches a reference to the sharedMethods object, and its methods to the Batman class.
-Each Batman can have their own age and strength but they will share the same methods, making your code leaner and faster. Imagine how much more efficient it will be to raise your vigilante batman army!&lt;/p&gt;
+&lt;p&gt;This example uses extend from the underscore js library. This approach creates a sharedMethods object, which includes training and fighting the Joker and &lt;em&gt;extends&lt;/em&gt; a reference to these sharedMethods onto the Batman class.&lt;/p&gt;
+&lt;p&gt;Each Batman can have their own age and strength but they will share their training and fighting methods, making your code leaner and faster. Imagine how much more efficient it will be to raise your vigilante batman army!&lt;/p&gt;
 &lt;h3 id=&quot;prototypal-instantiation&quot;&gt;Prototypal Instantiation&lt;/h3&gt;
 &lt;pre&gt;&lt;code class=&quot;lang-javascript&quot;&gt;var makeBatman = function() {  
   var batman = Object.create(batmanMethods);
@@ -81,10 +80,10 @@ batmanMethods.workOut = function () {
 
 var newBatman = makeBatman();
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;There are some obvious similarities between these last two methods. The difference is where the methods are. In the prototypal pattern, Object.create creates a delegation relationship between the object being created and the object being passed in. 
-This means that if an instantiated Batman is called upon to fightJoker, the lookup will fail on the given Batman instance but will be delegated to the batmanMethods object.
-Even though this Batman may not have these actions hard-coded in, he has access to them through the batmanMethods he was created with. Think of this as some heriditary instinct that he has. While he may not explicitly have a method for fighting the Joker, when he looks for it, he will find it in the batmanMethods object that he was created with.
-This saves space but can also make code a bit more flexible since if a Batman were to have a special fightJoker or workOut method it would take precedence over one that is on the batmanMethods object&lt;/p&gt;
+&lt;p&gt;There are some obvious similarities between these last two methods. The difference is where the methods are. In the prototypal pattern, Object.create creates a delegation relationship between the object being created and the object being passed in. &lt;/p&gt;
+&lt;p&gt;This means that if an instantiated Batman is called upon to fightJoker, we’ll first look for a fightJoker method on the individual Batman but when we don’t find one there, we’ll be go to the batmanMethods object where the fightJoker method lives. The fightJoker method will be delegated to the batmanMethods object.&lt;/p&gt;
+&lt;p&gt;Even though this Batman may not have these actions hard-coded in, he has access to them through the batmanMethods he was created with. Think of this as some heriditary instinct that he has. While he may not explicitly have a method for fighting the Joker, when he looks for it, he will find it in the batmanMethods object that he was created with.&lt;/p&gt;
+&lt;p&gt;This saves space but can also make code a bit more flexible since if a Batman were to have a special fightJoker or workOut method it would take precedence over one that is on the batmanMethods object. Hooray for flexibility!&lt;/p&gt;
 &lt;h3 id=&quot;pseudo-classical-instantiation&quot;&gt;Pseudo-Classical Instantiation&lt;/h3&gt;
 &lt;pre&gt;&lt;code class=&quot;lang-javascript&quot;&gt;var Batman = function () {  
   this.age = 38;
@@ -104,11 +103,14 @@ var newBatman = new Batman();
 &lt;p&gt;It is the method that most browsers are optimized for so get comfortable with it.
 Most imporant to understand with this method is what’s going on up at the top. There’s few things happening implicitly in this pattern.&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;&lt;code&gt;this = object.create(batman)&lt;/code&gt; happens right at the beginning &lt;/li&gt;
-&lt;li&gt;return this, which is the new batman &lt;/li&gt;
+&lt;li&gt;&lt;code&gt;this = object.create(batman)&lt;/code&gt; happens implicitly right at the beginning (&lt;em&gt;You didn’t event have to code it!&lt;/em&gt;)&lt;/li&gt;
+&lt;li&gt;The Batman function return &lt;code&gt;this&lt;/code&gt;, which is the new batman (&lt;em&gt;You didn’t have to code that either!&lt;/em&gt;)&lt;/li&gt;
 &lt;li&gt;The other thing to pay attention to is that these methods are being added onto the Batman Object prototype. These methods will then be available on every new Batman instance to delegate to if a lookup on the original object fails&lt;/li&gt;
 &lt;/ol&gt;
-</content>
+&lt;p&gt;Also, you may have noticed that the Batman function starts with a capital B, where the other methods started with a lower-case letter. This is actual best-practices and will let other people reading your code know that you’re using Pseudo-Classical instantiation. Additionally, we used the new keyword, which is what tells the parser to implicitly do those magic steps above!&lt;/p&gt;
+&lt;p&gt;So we’ve covered all of the above instantiation types and I’d be surprised if you don’t run into them in the future. I typically use Pseudo-Classical and as mentioned earlier, it’s what most browsers are optimized for.&lt;/p&gt;
+&lt;p&gt;Now you’re off to the races, any questions? lemme know!&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;./batman-run.gif&quot; alt=&quot;&quot;&gt;&lt;/p&gt;</content>
   </entry>
   <entry>
     <title>And so it begins</title>
