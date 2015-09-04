@@ -3,7 +3,7 @@
   <title>Will Johnson</title>
   <link href="http://blog.wcj.io/atom.xml" rel="self"/>
   <link href="http://blog.wcj.io"/>
-  <updated>2015-09-03T06:21:52.648Z</updated>
+  <updated>2015-09-04T06:54:11.039Z</updated>
   <id>http://blog.wcj.io</id>
   <author>
     <name>Will Johnson</name>
@@ -120,20 +120,10 @@ Most imporant to understand with this method is what’s going on up at the top.
     <author>
       <name>Will Johnson</name>
     </author>
-    <summary type="html">&lt;p&gt;I don’t have much to share for write now but check this out : )&lt;/p&gt;
-</summary>
-    <content type="html">&lt;p&gt;I don’t have much to share for write now but check this out : )&lt;/p&gt;
-&lt;p&gt;&lt;canvas id=canvas&gt;&lt;/canvas&gt;&lt;/p&gt;
-&lt;style type=&quot;text/css&quot;&gt;
-* {
-   margin:0; padding:0;
-}
+    <summary type="html">&lt;canvas width=&quot;1500&quot; height=&quot;1500&quot; id=&quot;canvas&quot;&gt;&lt;/canvas&gt;</summary>
+    <content type="html">&lt;canvas width=&quot;1500&quot; height=&quot;1500&quot; id=&quot;canvas&quot;&gt;&lt;/canvas&gt;
 
-html {
-   overflow:hidden;
-}
-&lt;/style&gt;
-
+&lt;p&gt;My first little ditty.&lt;/p&gt;
 &lt;script type=&quot;text/javascript&quot;&gt;
 window.onload = function() {
 
@@ -156,18 +146,20 @@ window.onload = function() {
       this.angle = angle;
    }
 
-   var num = 32;
-   var x = 0;
+   var num = 59;
+   var x = 14;
    var R,r ;
-   var lines = 32;
+   var lines = 48;
+
+
    /*--------------------------------------*/
    function size() {
-      canvas.width = window.innerWidth / 2;
-      canvas.height = window.innerHeight;
+      canvas.width = 690;
+      canvas.height = 660;
    }
 
    function bg() {
-      ctx.fillStyle = &quot;rgba(255,255,255,1)&quot;;
+      ctx.fillStyle = &quot;rgba(255,5,255,200)&quot;;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
    }
 
@@ -189,7 +181,7 @@ window.onload = function() {
       s.x = canvas.width / 2 + R * Math.cos(s.angle);
       s.y = canvas.height / 2 + R * Math.sin(s.angle);
 
-      s.angle += Math.PI / 720;
+      s.angle += Math.PI / 360;
 
    }
 
@@ -198,7 +190,7 @@ window.onload = function() {
       for (var i = 0; i &lt; arr.length; i++) {
          s = arr[i];
 
-         ctx.strokeStyle = &quot;rgb(100,150,200)&quot;;
+         ctx.strokeStyle = &quot;rgb(10,150,200)&quot;;
          ctx.beginPath();
          for (var j = 0; j &lt; lines; j++) {
             ctx.moveTo(s.x, s.y);
@@ -210,7 +202,7 @@ window.onload = function() {
 
          update(i);
       }
-      x += Math.PI / 1440;
+      x += Math.PI / 900;
       R = Math.abs(120 * Math.sin(x))+120;
       r = Math.abs(190* Math.cos(x))+10;
    }
