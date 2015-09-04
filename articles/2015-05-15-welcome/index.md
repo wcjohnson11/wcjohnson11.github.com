@@ -1,18 +1,8 @@
 
 # And so it begins
+<canvas width="1500" height="1500" id="canvas"></canvas>
 
-I don't have much to share for write now but check this out : )
-
-<canvas id=canvas></canvas>
-<style type="text/css">
-* {
-   margin:0; padding:0;
-}
-
-html {
-   overflow:hidden;
-}
-</style>
+My first little ditty.
 
 <script type="text/javascript">
 window.onload = function() {
@@ -36,18 +26,20 @@ window.onload = function() {
       this.angle = angle;
    }
 
-   var num = 32;
-   var x = 0;
+   var num = 59;
+   var x = 14;
    var R,r ;
-   var lines = 32;
+   var lines = 48;
+
+
    /*--------------------------------------*/
    function size() {
-      canvas.width = window.innerWidth / 2;
-      canvas.height = window.innerHeight;
+      canvas.width = 690;
+      canvas.height = 660;
    }
 
    function bg() {
-      ctx.fillStyle = "rgba(255,255,255,1)";
+      ctx.fillStyle = "rgba(255,5,255,200)";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
    }
 
@@ -69,7 +61,7 @@ window.onload = function() {
       s.x = canvas.width / 2 + R * Math.cos(s.angle);
       s.y = canvas.height / 2 + R * Math.sin(s.angle);
 
-      s.angle += Math.PI / 720;
+      s.angle += Math.PI / 360;
 
    }
 
@@ -78,7 +70,7 @@ window.onload = function() {
       for (var i = 0; i < arr.length; i++) {
          s = arr[i];
 
-         ctx.strokeStyle = "rgb(100,150,200)";
+         ctx.strokeStyle = "rgb(10,150,200)";
          ctx.beginPath();
          for (var j = 0; j < lines; j++) {
             ctx.moveTo(s.x, s.y);
@@ -90,7 +82,7 @@ window.onload = function() {
 
          update(i);
       }
-      x += Math.PI / 1440;
+      x += Math.PI / 900;
       R = Math.abs(120 * Math.sin(x))+120;
       r = Math.abs(190* Math.cos(x))+10;
    }
