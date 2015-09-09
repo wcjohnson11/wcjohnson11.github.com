@@ -30,6 +30,8 @@ return "hsl(" + Math.random() * 360 + ",100%,50%)"; });
  The above will randomly color all paragraphs on a page, pretty sweet right?
  
  <script type="text/javascript">
+ if (document.ready){
+ 
 // Creating radio buttons
 
 var shapeData = ["Triangle", "Circle", "Square", "Rectangle"], 
@@ -52,6 +54,5 @@ labels = form.selectAll("label")
     })
     .property("checked", function(d, i) {return i===j;});
 
+ }
  </script>
-
- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
