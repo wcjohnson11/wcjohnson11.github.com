@@ -3,11 +3,47 @@
   <title>Will Johnson</title>
   <link href="http://blog.wcj.io/atom.xml" rel="self"/>
   <link href="http://blog.wcj.io"/>
-  <updated>2015-09-09T03:44:04.816Z</updated>
+  <updated>2015-09-09T04:24:56.601Z</updated>
   <id>http://blog.wcj.io</id>
   <author>
     <name>Will Johnson</name>
   </author>
+  <entry>
+    <title>Creating D3 Donuts for Mode</title>
+    <link href="http://blog.wcj.io/creating-d3-donuts-for-mode"/>
+    <id>http://blog.wcj.io/creating-d3-donuts-for-mode</id>
+    <updated>2015-09-08T00:00:00.000Z</updated>
+    <author>
+      <name>Will Johnson</name>
+    </author>
+    <summary type="html">&lt;p&gt;We use &lt;a href=&quot;www.modeanalytics.com&quot;&gt;Mode&lt;/a&gt; pretty extensively at Segment, and I’ve actually been fanboying hard since way before I started working at Segment when I first saw Derek Steer speak at SF Data Week about the value in sharing analysis and visualization to create communities. In short, they’re aimed to be the Github of data analysis and visualization. If you haven’t checked them out, go ahead and do so.&lt;/p&gt;
+</summary>
+    <content type="html">&lt;p&gt;We use &lt;a href=&quot;www.modeanalytics.com&quot;&gt;Mode&lt;/a&gt; pretty extensively at Segment, and I’ve actually been fanboying hard since way before I started working at Segment when I first saw Derek Steer speak at SF Data Week about the value in sharing analysis and visualization to create communities. In short, they’re aimed to be the Github of data analysis and visualization. If you haven’t checked them out, go ahead and do so.&lt;/p&gt;
+&lt;p&gt;One of the things that we like most about it is that we can connect our Redshift cluster too it and easily share ad-hoc queries. Say I’m curious about how our latest batch of integrations are doing, I’ll write up a SQL query in Mode, save it and then share it with a colleague who can fork my query and make their own modifications before sharing back to me.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;./sharing.gif&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+Because sharing is caring
+
+Another common use case is someone will put together a cool query and will send it to me and ask me if I can write some D3 for it. In addition to making it easy to share queries and their resulting data sets, they make it easy to write your own custom D3 to display the data however you want.
+
+Today I’m making D3 Donuts, mmmmm
+
+The data from your charts is available in Mode as &lt;code&gt;dataset.content&lt;/code&gt; and you can pass that into the .data() function like you would any data to drive your documents.
+
+### Be The Data
+The first step in making any data visualization is understanding what the data looks look, in this case, it’s an object with keys that are integration categories and values that are comma-delimited strings of the integrations for each category.
+
+So off the bat I already know I’m going to need to turn those comma delimited strings into arrays of strings, split at the commas before I do anything else.
+&lt;code&gt;js
+var data = dataset.content[0];
+  for (var key in data) {
+    if (data[key] === &amp;quot;&amp;quot;) continue;
+    data[key] = data[key].split(&amp;#39;, &amp;#39;);
+};&lt;/code&gt;
+The above will give me arrays of strings for categories with integrations and empty strings for categories with no integrations. A perfect starting line for making some visualization goodies since I’ll be able to check the &lt;code&gt;data[key]&lt;/code&gt;‘s length and easily see how many integrations a given category has.
+
+
+&lt;p&gt;&lt;img src=&quot;./donutdon.gif&quot; alt=&quot;&quot;&gt;&lt;/p&gt;</content>
+  </entry>
   <entry>
     <title>D3, ever heard of it?</title>
     <link href="http://blog.wcj.io/what-is-d3"/>
@@ -62,21 +98,6 @@ labels = form.selectAll(&quot;label&quot;)
  &lt;/script&gt;
 
  &lt;script type=&quot;text/javascript&quot; src=&quot;https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js&quot;&gt;&lt;/script&gt;</content>
-  </entry>
-  <entry>
-    <title>Creating D3 Donuts for Mode</title>
-    <link href="http://blog.wcj.io/creating-d3-donuts-for-mode"/>
-    <id>http://blog.wcj.io/creating-d3-donuts-for-mode</id>
-    <updated>2015-09-08T00:00:00.000Z</updated>
-    <author>
-      <name>Will Johnson</name>
-    </author>
-    <summary type="html">&lt;p&gt;D3 is a JavaScript Library that combines powerful visualization components with a data-driven approach to DOM manipulation. As a library it is extremely flexible, working directly with HTML, CSS and SVG to display data in any way you can imagine. It is also fun to write thanks to it’s functional style that allows for method chaining, and code reusability.&lt;/p&gt;
-</summary>
-    <content type="html">&lt;h2 id=&quot;d3-ever-heard-of-it-&quot;&gt;D3, ever heard of it?&lt;/h2&gt;
-&lt;h3 id=&quot;what-is-it-&quot;&gt;What is it?&lt;/h3&gt;
-&lt;p&gt;D3 is a JavaScript Library that combines powerful visualization components with a data-driven approach to DOM manipulation. As a library it is extremely flexible, working directly with HTML, CSS and SVG to display data in any way you can imagine. It is also fun to write thanks to it’s functional style that allows for method chaining, and code reusability.&lt;/p&gt;
-</content>
   </entry>
   <entry>
     <title>What is data science?</title>
