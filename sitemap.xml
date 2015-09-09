@@ -6,26 +6,38 @@
 
   <url>
     <loc>http://blog.wcj.io</loc>
-    <lastmod>2015-09-07T01:19:34.686Z</lastmod>
+    <lastmod>2015-09-09T03:44:04.816Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
     <url>
+      <loc>http://blog.wcj.io/what-is-d3</loc>
+      <lastmod>2015-09-09T03:44:04.816Z</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.8</priority>
+    </url>
+    <url>
+      <loc>http://blog.wcj.io/creating-d3-donuts-for-mode</loc>
+      <lastmod>2015-09-09T03:44:04.816Z</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.8</priority>
+    </url>
+    <url>
       <loc>http://blog.wcj.io/data-science</loc>
-      <lastmod>2015-09-07T01:19:34.686Z</lastmod>
+      <lastmod>2015-09-09T03:44:04.816Z</lastmod>
       <changefreq>weekly</changefreq>
       <priority>0.8</priority>
     </url>
     <url>
       <loc>http://blog.wcj.io/javascript-instantiation</loc>
-      <lastmod>2015-09-07T01:19:34.686Z</lastmod>
+      <lastmod>2015-09-09T03:44:04.816Z</lastmod>
       <changefreq>weekly</changefreq>
       <priority>0.8</priority>
     </url>
     <url>
       <loc>http://blog.wcj.io/welcome</loc>
-      <lastmod>2015-09-07T01:19:34.686Z</lastmod>
+      <lastmod>2015-09-09T03:44:04.816Z</lastmod>
       <changefreq>weekly</changefreq>
       <priority>0.8</priority>
     </url>

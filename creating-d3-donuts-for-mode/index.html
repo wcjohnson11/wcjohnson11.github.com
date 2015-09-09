@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Creating D3 Donuts for Mode</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="twitter:creator" content="wcj111">
+    <meta name="twitter:card" content="">
+    <link rel="alternate" type="application/atom+xml" href="atom.xml">
+    <link rel="stylesheet" href="/index.css">
+    <script type="text/javascript">
+      !function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","group","track","ready","alias","page","once","off","on"];analytics.factory=function(t){return function(){var e=Array.prototype.slice.call(arguments);e.unshift(t);analytics.push(e);return analytics}};for(var t=0;t<analytics.methods.length;t++){var e=analytics.methods[t];analytics[e]=analytics.factory(e)}analytics.load=function(t){var e=document.createElement("script");e.type="text/javascript";e.async=!0;e.src=("https:"===document.location.protocol?"https://":"http://")+"cdn.segment.com/analytics.js/v1/"+t+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(e,n)};analytics.SNIPPET_VERSION="3.0.1";
+      analytics.load('TL3ANRWfdNX6kcqdVYKp8SVaeEJgEym8');
+      }}();
+    </script>
+  </head>
+  <body>
+    <div class="Layout">
+      <div class="Layout-nav">
+        <div class="Profile">
+          <a class="Profile-avatar" href="/"></a>
+          <h1 class="Profile-name Heading Heading--medium"><a href="/">Will Johnson</a></h4>
+          <p class="Profile-role">Success at <a class="Link" href="https://segment.com">Segment</a></p>
+        
+          <ul class="Profile-links">
+            <a class="Profile-link Profile-twitter-link" href="https://twitter.com/wcj111">Twitter</a>
+            <a class="Profile-link Profile-github-link" href="https://github.com/wcjohnson11">GitHub</a>
+            
+            
+            
+            
+            
+            
+            <a class="Profile-link Profile-rss-link" href="/atom.xml">RSS<a>
+          </ul>
+        
+          <a class="Profile-twitter-button twitter-follow-button" href="https://twitter.com/wcj111" data-show-count="false">Follow @wcj111</a>
+          <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+        </div>      </div>
+      <div class="Layout-main"><div id="Reading-progress">
+  <span id="Progress-bar" class="bar"></span>
+</div>
+<article class="Article">
+  <a class="Article-home" href="/">Home</a>
+  <h1 class="Article-title Heading Heading--huge">Creating D3 Donuts for Mode</h1>
+  <time class="Article-date" datetime="2015-09-08T00:00:00.000Z">Monday, 7 September 2015</time>
+  <div class="Article-content Prose Prose--medium">
+    <h2 id="d3-ever-heard-of-it-">D3, ever heard of it?</h2>
+<h3 id="what-is-it-">What is it?</h3>
+<p>D3 is a JavaScript Library that combines powerful visualization components with a data-driven approach to DOM manipulation. As a library it is extremely flexible, working directly with HTML, CSS and SVG to display data in any way you can imagine. It is also fun to write thanks to it’s functional style that allows for method chaining, and code reusability.</p>
+
+  </div>
+</article>
+<script>
+  analytics.page('Article', {
+    article: {
+      name: "Creating D3 Donuts for Mode",
+      date: "2015-09-08T00:00:00.000Z"
+    }
+  });
+  window.addEventListener('scroll', function(e) {
+    var s = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
+    var body = document.body;
+    var html = document.documentElement;
+    var d = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
+    var c = window.innerHeight;
+    var position = (s / (d - c)) * 100;
+    document.getElementById('Progress-bar').setAttribute('style', 'width: ' + position + '%');
+  });
+</script>
+      </div>
+    </div>
+    <script src="/index.js"></script>
+  </body>
+</html>
