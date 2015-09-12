@@ -1,0 +1,172 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Mitchell&#x27;s Best Candidate Algorithm</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="twitter:creator" content="wcj111">
+    <meta name="twitter:card" content="">
+    <link rel="alternate" type="application/atom+xml" href="atom.xml">
+    <link rel="stylesheet" href="/index.css">
+    <script type="text/javascript">
+      !function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","group","track","ready","alias","page","once","off","on"];analytics.factory=function(t){return function(){var e=Array.prototype.slice.call(arguments);e.unshift(t);analytics.push(e);return analytics}};for(var t=0;t<analytics.methods.length;t++){var e=analytics.methods[t];analytics[e]=analytics.factory(e)}analytics.load=function(t){var e=document.createElement("script");e.type="text/javascript";e.async=!0;e.src=("https:"===document.location.protocol?"https://":"http://")+"cdn.segment.com/analytics.js/v1/"+t+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(e,n)};analytics.SNIPPET_VERSION="3.0.1";
+      analytics.load('TL3ANRWfdNX6kcqdVYKp8SVaeEJgEym8');
+      }}();
+    </script>
+  </head>
+  <body>
+    <div class="Layout">
+      <div class="Layout-nav">
+        <div class="Profile">
+          <a class="Profile-avatar" href="/"></a>
+          <h1 class="Profile-name Heading Heading--medium"><a href="/">Will Johnson</a></h4>
+          <p class="Profile-role">Success at <a class="Link" href="https://segment.com">Segment</a></p>
+        
+          <ul class="Profile-links">
+            <a class="Profile-link Profile-twitter-link" href="https://twitter.com/wcj111">Twitter</a>
+            <a class="Profile-link Profile-github-link" href="https://github.com/wcjohnson11">GitHub</a>
+            
+            
+            
+            
+            
+            
+            <a class="Profile-link Profile-rss-link" href="/atom.xml">RSS<a>
+          </ul>
+        
+          <a class="Profile-twitter-button twitter-follow-button" href="https://twitter.com/wcj111" data-show-count="false">Follow @wcj111</a>
+          <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+        </div>      </div>
+      <div class="Layout-main"><div id="Reading-progress">
+  <span id="Progress-bar" class="bar"></span>
+</div>
+<article class="Article">
+  <a class="Article-home" href="/">Home</a>
+  <h1 class="Article-title Heading Heading--huge">Mitchell&#x27;s Best Candidate Algorithm</h1>
+  <time class="Article-date" datetime="2015-09-10T00:00:00.000Z">Wednesday, 9 September 2015</time>
+  <div class="Article-content Prose Prose--medium">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+<script>
+
+var width = 960,
+    height = 500;
+
+var sample = bestCandidateSampler(width, height, 10, 3000);
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+d3.timer(function() {
+  for (var i = 0; i < 10; ++i) {
+    var s = sample();
+    if (!s) return true;
+    svg.append("circle")
+        .attr("cx", s[0])
+        .attr("cy", s[1])
+        .attr("r", 0)
+      .transition()
+        .attr("r", 2);
+  }
+});
+
+function bestCandidateSampler(width, height, numCandidates, numSamplesMax) {
+  var numSamples = 0;
+
+  var quadtree = d3.geom.quadtree()
+      .extent([[0, 0], [width, height]])
+      ([[Math.random() * width, Math.random() * height]]);
+
+  return function() {
+    if (++numSamples > numSamplesMax) return;
+    var bestCandidate, bestDistance = 0;
+    for (var i = 0; i < numCandidates; ++i) {
+      var c = [Math.random() * width, Math.random() * height],
+          d = distance(search(c[0], c[1]), c);
+      if (d > bestDistance) {
+        bestDistance = d;
+        bestCandidate = c;
+      }
+    }
+    quadtree.add(bestCandidate);
+    return bestCandidate;
+  };
+
+  function distance(a, b) {
+    var dx = a[0] - b[0],
+        dy = a[1] - b[1];
+    return dx * dx + dy * dy;
+  };
+
+  // Find the closest node to the specified point.
+  function search(x, y) {
+    var x0 = 0,
+        y0 = 0,
+        x3 = width,
+        y3 = width,
+        minDistance2 = Infinity,
+        closestPoint;
+
+    (function find(node, x1, y1, x2, y2) {
+      var point;
+
+      // stop searching if this cell can’t contain a closer node
+      if (x1 > x3 || y1 > y3 || x2 < x0 || y2 < y0) return;
+
+      // visit this point
+      if (point = node.point) {
+        var dx = x - point[0],
+            dy = y - point[1],
+            distance2 = dx * dx + dy * dy;
+        if (distance2 < minDistance2) {
+          var distance = Math.sqrt(minDistance2 = distance2);
+          x0 = x - distance, y0 = y - distance;
+          x3 = x + distance, y3 = y + distance;
+          closestPoint = point;
+        }
+      }
+
+      // bisect the current node
+      var children = node.nodes,
+          xm = (x1 + x2) * .5,
+          ym = (y1 + y2) * .5,
+          right = x > xm,
+          below = y > ym;
+
+      // visit closest cell first
+      if (node = children[below << 1 | right]) find(node, right ? xm : x1, below ? ym : y1, right ? x2 : xm, below ? y2 : ym);
+      if (node = children[below << 1 | !right]) find(node, right ? x1 : xm, below ? ym : y1, right ? xm : x2, below ? y2 : ym);
+      if (node = children[!below << 1 | right]) find(node, right ? xm : x1, below ? y1 : ym, right ? x2 : xm, below ? ym : y2);
+      if (node = children[!below << 1 | !right]) find(node, right ? x1 : xm, below ? y1 : ym, right ? xm : x2, below ? ym : y2);
+    })(quadtree, x0, y0, x3, y3);
+
+    return closestPoint;
+  }
+}
+
+</script>
+  </div>
+</article>
+<script>
+  analytics.page('Article', {
+    article: {
+      name: "Mitchell&#x27;s Best Candidate Algorithm",
+      date: "2015-09-10T00:00:00.000Z"
+    }
+  });
+  window.addEventListener('scroll', function(e) {
+    var s = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
+    var body = document.body;
+    var html = document.documentElement;
+    var d = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
+    var c = window.innerHeight;
+    var position = (s / (d - c)) * 100;
+    document.getElementById('Progress-bar').setAttribute('style', 'width: ' + position + '%');
+  });
+</script>
+      </div>
+    </div>
+    <script src="/index.js"></script>
+  </body>
+</html>

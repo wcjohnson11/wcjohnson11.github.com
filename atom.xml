@@ -3,11 +3,121 @@
   <title>Will Johnson</title>
   <link href="http://blog.wcj.io/atom.xml" rel="self"/>
   <link href="http://blog.wcj.io"/>
-  <updated>2015-09-09T04:46:14.469Z</updated>
+  <updated>2015-09-12T01:17:56.371Z</updated>
   <id>http://blog.wcj.io</id>
   <author>
     <name>Will Johnson</name>
   </author>
+  <entry>
+    <title>Mitchell&#x27;s Best Candidate Algorithm</title>
+    <link href="http://blog.wcj.io/mitchells"/>
+    <id>http://blog.wcj.io/mitchells</id>
+    <updated>2015-09-10T00:00:00.000Z</updated>
+    <author>
+      <name>Will Johnson</name>
+    </author>
+    <summary type="html">&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js&quot;&gt;&lt;/script&gt;</summary>
+    <content type="html">&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+
+var width = 960,
+    height = 500;
+
+var sample = bestCandidateSampler(width, height, 10, 3000);
+
+var svg = d3.select(&quot;body&quot;).append(&quot;svg&quot;)
+    .attr(&quot;width&quot;, width)
+    .attr(&quot;height&quot;, height);
+
+d3.timer(function() {
+  for (var i = 0; i &lt; 10; ++i) {
+    var s = sample();
+    if (!s) return true;
+    svg.append(&quot;circle&quot;)
+        .attr(&quot;cx&quot;, s[0])
+        .attr(&quot;cy&quot;, s[1])
+        .attr(&quot;r&quot;, 0)
+      .transition()
+        .attr(&quot;r&quot;, 2);
+  }
+});
+
+function bestCandidateSampler(width, height, numCandidates, numSamplesMax) {
+  var numSamples = 0;
+
+  var quadtree = d3.geom.quadtree()
+      .extent([[0, 0], [width, height]])
+      ([[Math.random() * width, Math.random() * height]]);
+
+  return function() {
+    if (++numSamples &gt; numSamplesMax) return;
+    var bestCandidate, bestDistance = 0;
+    for (var i = 0; i &lt; numCandidates; ++i) {
+      var c = [Math.random() * width, Math.random() * height],
+          d = distance(search(c[0], c[1]), c);
+      if (d &gt; bestDistance) {
+        bestDistance = d;
+        bestCandidate = c;
+      }
+    }
+    quadtree.add(bestCandidate);
+    return bestCandidate;
+  };
+
+  function distance(a, b) {
+    var dx = a[0] - b[0],
+        dy = a[1] - b[1];
+    return dx * dx + dy * dy;
+  };
+
+  // Find the closest node to the specified point.
+  function search(x, y) {
+    var x0 = 0,
+        y0 = 0,
+        x3 = width,
+        y3 = width,
+        minDistance2 = Infinity,
+        closestPoint;
+
+    (function find(node, x1, y1, x2, y2) {
+      var point;
+
+      // stop searching if this cell can’t contain a closer node
+      if (x1 &gt; x3 || y1 &gt; y3 || x2 &lt; x0 || y2 &lt; y0) return;
+
+      // visit this point
+      if (point = node.point) {
+        var dx = x - point[0],
+            dy = y - point[1],
+            distance2 = dx * dx + dy * dy;
+        if (distance2 &lt; minDistance2) {
+          var distance = Math.sqrt(minDistance2 = distance2);
+          x0 = x - distance, y0 = y - distance;
+          x3 = x + distance, y3 = y + distance;
+          closestPoint = point;
+        }
+      }
+
+      // bisect the current node
+      var children = node.nodes,
+          xm = (x1 + x2) * .5,
+          ym = (y1 + y2) * .5,
+          right = x &gt; xm,
+          below = y &gt; ym;
+
+      // visit closest cell first
+      if (node = children[below &lt;&lt; 1 | right]) find(node, right ? xm : x1, below ? ym : y1, right ? x2 : xm, below ? y2 : ym);
+      if (node = children[below &lt;&lt; 1 | !right]) find(node, right ? x1 : xm, below ? ym : y1, right ? xm : x2, below ? y2 : ym);
+      if (node = children[!below &lt;&lt; 1 | right]) find(node, right ? xm : x1, below ? y1 : ym, right ? x2 : xm, below ? ym : y2);
+      if (node = children[!below &lt;&lt; 1 | !right]) find(node, right ? x1 : xm, below ? y1 : ym, right ? xm : x2, below ? ym : y2);
+    })(quadtree, x0, y0, x3, y3);
+
+    return closestPoint;
+  }
+}
+
+&lt;/script&gt;</content>
+  </entry>
   <entry>
     <title>D3, ever heard of it?</title>
     <link href="http://blog.wcj.io/what-is-d3"/>
